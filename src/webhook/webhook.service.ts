@@ -21,6 +21,8 @@ export class WebhookService {
   }
 
   async processWebhookEvents(data: any) {
-    console.log(util.inspect(data, {showHidden: false, depth: null, colors: true}))
+    console.log(
+      util.inspect(data, { showHidden: false, depth: null, colors: false }),
+    );
   }
 }
