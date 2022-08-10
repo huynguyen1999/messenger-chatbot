@@ -14,15 +14,11 @@ export class ReplierService {
       message: response,
     };
 
-    const result = await axios.post(
-      this.configService.get('facebook.uri'),
-      requestBody,
-      {
-        params: {
-          accessToken: this.configService.get('facebook.access_token'),
-        },
-      },
-    );
+    const messageUrl =
+      this.configService.get('facebook.uri') +
+      `?access_token=${this.configService.get('facebook.access_token')}`;
+    console.log(messageUrl);
+    const result = await axios.post(messageUrl, requestBody);
     console.log(result);
     return result;
   }
