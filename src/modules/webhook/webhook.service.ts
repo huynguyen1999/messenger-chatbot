@@ -28,7 +28,7 @@ export class WebhookService {
   async processWebhookEvents(data: any) {
     console.log(util.inspect(data, { showHidden: false, depth: null }));
 
-    const nlpEntities = data?.entry[0]?.messaging[0]?.message?.nlp.entities;
+    const nlpEntities = data?.entry[0]?.messaging[0]?.message?.nlp?.entities;
     let { value: intent = '', confidence = 0 } = nlpEntities?.intent[0]?.value;
 
     if (confidence < CONFIDENCE_THRESHOLD) {
