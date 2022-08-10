@@ -23,6 +23,6 @@ export class WebhookService {
   async processWebhookEvents(data: any) {
     const message = data?.entry[0]?.messaging[0]?.message;
     console.log('message', message);
-    console.log('nlp', message?.nlp);
+    console.log('nlp', message?.nlp?.intent);
   }
 }
