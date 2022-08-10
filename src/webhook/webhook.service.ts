@@ -6,6 +6,7 @@ import {
   DEFINED_ENTITIES,
   DEFINED_INTENTS,
 } from './webhook.constants';
+import * as util from 'util';
 @Injectable()
 export class WebhookService {
   constructor(private configService: ConfigService) {}
@@ -25,12 +26,13 @@ export class WebhookService {
   }
 
   async processWebhookEvents(data: any) {
-    console.log(JSON.stringify(data));
+    console.log(util.inspect(data, { showHidden: false, depth: null }));
 
     const nlpEntities = data?.entry[0]?.messaging[0]?.message?.nlp.entities;
-    const { value: intent, confidence } = nlpEntities?.intent[0]?.value;
+    let { value: intent, confidence } = nlpEntities?.intent[0]?.value;
 
     if (confidence < CONFIDENCE_THRESHOLD) {
+      intent = DEFINED_INTENTS.OUT_OF_SCOPE;
     }
 
     switch (intent) {
@@ -46,6 +48,8 @@ export class WebhookService {
       case DEFINED_INTENTS.ORDER_PAYMENT:
         // if cart.length > 0 we continue
         // else ...
+        break;
+      default:
         break;
     }
   }

@@ -4,6 +4,7 @@ export const DEFINED_INTENTS = {
   GOODBYE: 'goodbye',
   GREET: 'greet',
   HELP: 'help',
+  OUT_OF_SCOPE: 'out_of_scope',
 };
 
 export const DEFINED_ENTITIES = {
