@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InvalidVerifyToken } from './exceptions';
-
+import * as util from 'util';
 @Injectable()
 export class WebhookService {
   constructor(private configService: ConfigService) {}
@@ -21,8 +21,6 @@ export class WebhookService {
   }
 
   async processWebhookEvents(data: any) {
-    const message = data?.entry[0]?.messaging[0]?.message;
-    console.log('message', message);
-    console.log('nlp entities', message?.nlp?.entities);
+    console.log(util.inspect(data, {showHidden: false, depth: null, colors: true}))
   }
 }
