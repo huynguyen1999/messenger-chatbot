@@ -29,8 +29,13 @@ export class WebhookService {
     console.log(util.inspect(data, { showHidden: false, depth: null }));
 
     const nlpEntities = data.entry[0].messaging[0].message.nlp?.entities;
-    let { value: intent = '', confidence = 0 } =
-      nlpEntities?.intent?.at(0) ?? ({} as any);
+    let intent = '',
+      confidence = 0;
+
+    if (nlpEntities.intent) {
+      intent = nlpEntities.intent[0].value;
+      confidence = nlpEntities.intent[0].confidence;
+    }
 
     if (confidence < CONFIDENCE_THRESHOLD) {
       intent = DEFINED_INTENTS.OUT_OF_SCOPE;
