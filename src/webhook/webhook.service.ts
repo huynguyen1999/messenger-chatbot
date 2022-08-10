@@ -37,6 +37,7 @@ export class WebhookService {
 
     switch (intent) {
       case DEFINED_INTENTS.GREET:
+        
         break;
       case DEFINED_INTENTS.GOODBYE:
         break;
@@ -50,6 +51,7 @@ export class WebhookService {
         // else ...
         break;
       default:
+
         break;
     }
   }
