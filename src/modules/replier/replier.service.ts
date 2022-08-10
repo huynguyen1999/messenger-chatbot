@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import axios from 'axios';
+import { RESPONSE_TEMPLATE } from './replier.constants';
 
 @Injectable()
 export class ReplierService {
@@ -26,10 +27,18 @@ export class ReplierService {
     return result;
   }
 
-  async sendDefault() {}
-  async sendGreet() {}
-  async sendGoodbye() {}
-  async sendHelp() {}
-  async processOrderPayment() {}
-  async processOrderRequest() {}
+  async sendDefault(follower) {
+    return await this.sendMessageApi(follower.id, RESPONSE_TEMPLATE.DEFAULT);
+  }
+  async sendGreet(follower) {
+    return await this.sendMessageApi(follower.id, RESPONSE_TEMPLATE.GREET);
+  }
+  async sendGoodbye(follower) {
+    return await this.sendMessageApi(follower.id, RESPONSE_TEMPLATE.GOODBYE);
+  }
+  async sendHelp(follower) {
+    return await this.sendMessageApi(follower.id, RESPONSE_TEMPLATE.HELP);
+  }
+  async processOrderPayment(follower) {}
+  async processOrderRequest(follower) {}
 }

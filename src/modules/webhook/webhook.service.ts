@@ -33,6 +33,7 @@ export class WebhookService {
   async processWebhookEvents(data: WebhookDto) {
     console.log(util.inspect(data, { showHidden: false, depth: null }));
 
+    const follower = data.entry[0].messaging[0].sender;
     const nlpEntities = data.entry[0].messaging[0].message.nlp?.entities;
     let intent = '';
 
@@ -45,22 +46,22 @@ export class WebhookService {
 
     switch (intent) {
       case DEFINED_INTENTS.GREET:
-        await this.replierService.sendGreet();
+        await this.replierService.sendGreet(follower);
         break;
       case DEFINED_INTENTS.GOODBYE:
-        await this.replierService.sendGoodbye();
+        await this.replierService.sendGoodbye(follower);
         break;
       case DEFINED_INTENTS.HELP:
-        await this.replierService.sendHelp();
+        await this.replierService.sendHelp(follower);
         break;
       case DEFINED_INTENTS.ORDER_REQUEST:
-        await this.replierService.processOrderRequest();
+        await this.replierService.processOrderRequest(follower);
         break;
       case DEFINED_INTENTS.ORDER_PAYMENT:
-        await this.replierService.processOrderPayment();
+        await this.replierService.processOrderPayment(follower);
         break;
       default:
-        await this.replierService.sendDefault();
+        await this.replierService.sendDefault(follower);
     }
   }
 }
