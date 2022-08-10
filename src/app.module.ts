@@ -21,7 +21,5 @@ import { ReplierModule } from './modules/replier/replier.module';
     WebhookModule,
     ReplierModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

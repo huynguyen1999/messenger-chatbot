@@ -7,9 +7,14 @@ import {
   DEFINED_INTENTS,
 } from './webhook.constants';
 import * as util from 'util';
+import { WebhookDto } from './dtos';
+import { ReplierService } from '../replier/replier.service';
 @Injectable()
 export class WebhookService {
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private replierService: ReplierService,
+  ) {}
 
   verifyWebhook(data: any) {
     console.log(data);
@@ -25,38 +30,37 @@ export class WebhookService {
     throw new InvalidVerifyToken('Invalid verify token!');
   }
 
-  async processWebhookEvents(data: any) {
+  async processWebhookEvents(data: WebhookDto) {
     console.log(util.inspect(data, { showHidden: false, depth: null }));
 
     const nlpEntities = data.entry[0].messaging[0].message.nlp?.entities;
-    let intent = '',
-      confidence = 0;
+    let intent = '';
 
-    if (nlpEntities.intent) {
+    if (
+      nlpEntities.intent &&
+      nlpEntities.intent[0].confidence >= CONFIDENCE_THRESHOLD
+    ) {
       intent = nlpEntities.intent[0].value;
-      confidence = nlpEntities.intent[0].confidence;
-    }
-
-    if (confidence < CONFIDENCE_THRESHOLD) {
-      intent = DEFINED_INTENTS.OUT_OF_SCOPE;
     }
 
     switch (intent) {
       case DEFINED_INTENTS.GREET:
+        await this.replierService.sendGreet();
         break;
       case DEFINED_INTENTS.GOODBYE:
+        await this.replierService.sendGoodbye();
         break;
       case DEFINED_INTENTS.HELP:
+        await this.replierService.sendHelp();
         break;
       case DEFINED_INTENTS.ORDER_REQUEST:
-        // add to cart
+        await this.replierService.processOrderRequest();
         break;
       case DEFINED_INTENTS.ORDER_PAYMENT:
-        // if cart.length > 0 we continue
-        // else ...
+        await this.replierService.processOrderPayment();
         break;
       default:
-        break;
+        await this.replierService.sendDefault();
     }
   }
 }

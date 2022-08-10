@@ -1,4 +1,3 @@
-
 class UserDto{
     id: string;
 }
@@ -8,12 +7,8 @@ class NlpLocaleDto{
     confidence: number;
 }
 
-class NlpEntityDto{
-
-}
-
 class MessageNlpDto{
-    entities: NlpEntityDto;
+    entities: any;
     detected_locales: NlpLocaleDto[];
 }
 
@@ -23,18 +18,16 @@ class MessageDto{
     nlp: MessageNlpDto;
 }
 
+class WebhookEntryContext{
+    app_id: string;
+    metadata: string;
+}
 class WebhookMessagingDto{
     sender: UserDto;
     recipient: UserDto;
     timestamp: number;
     message: MessageDto;
 }
-
-class WebhookEntryContext{
-    app_id: string;
-    metadata: string;
-}
-
 class WebhookEntryDto{
     id: string;
     time: number;

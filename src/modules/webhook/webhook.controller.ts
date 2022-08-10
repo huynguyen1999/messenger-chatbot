@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
+import { WebhookDto } from './dtos';
 import { WebhookService } from './webhook.service';
 
 @Controller('webhook')
@@ -17,7 +18,7 @@ export class WebhookController {
 
   @Post()
   async processWebhookEvents(
-    @Body() body: any,
+    @Body() body: WebhookDto,
     @Req() req: any,
     @Res() res: any,
   ) {
