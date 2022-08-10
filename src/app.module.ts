@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { WebhookModule } from './webhook/webhook.module';
+import { WebhookModule } from './modules/webhook/webhook.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configuration } from './configuration';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ReplierModule } from './modules/replier/replier.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       inject: [ConfigService],
     }),
     WebhookModule,
+    ReplierModule,
   ],
   controllers: [],
   providers: [],
