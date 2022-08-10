@@ -23,6 +23,7 @@ export class WebhookController {
   ) {
     try {
       await this.webhookService.processWebhookEvents(body);
+      res.sendStatus(200);
     } catch (error) {
       res.status(403).json(error);
     }
