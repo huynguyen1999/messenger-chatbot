@@ -30,7 +30,7 @@ export class WebhookService {
 
     const nlpEntities = data.entry[0].messaging[0].message.nlp?.entities;
     let { value: intent = '', confidence = 0 } =
-      nlpEntities?.intent?.at(0)?.value;
+      nlpEntities?.intent?.at(0) ?? {};
 
     if (confidence < CONFIDENCE_THRESHOLD) {
       intent = DEFINED_INTENTS.OUT_OF_SCOPE;
