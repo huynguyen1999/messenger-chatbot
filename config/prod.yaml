@@ -2,7 +2,7 @@ app:
   port: 3000
 
 facebook:
-  access_token: EAAGeqaVIuesBAHI0gAVb2o6F43URGKZAgkaI7SWomh6MJGGZBDYuLVEHRZCNyU5rIWS9w9dJhZChzSQq9FnO8nY6ueZBN0OrRdjVgYkrcuWfz5LfhuFjxmb46ZAJoQelodRUEtSsSZBJDyGNWDIMVUk4f4aDclI8OirVsdOU6MIkfXUAS7hWCse
+  access_token: EAAGeqaVIuesBABzmZAe5Y4pJ7XukBZAhBa1KBIAZCE23gEuZCzM85wXyTaHKMZAaW4hW3DJ1qGtLZAUH3mjy8XZAi5EdpHXY09oRr56qKh6v2gn6qxueOgSdSyNZAFOobV0fD9Pe5bfpQVB2qqTM0ECGEgmRY5YZBqkiCZCl9Xf3itm1o0NvVZAIVEC
   verify_token: MESSENGER_CHATBOT
   uri: https://graph.facebook.com/v14.0/me/messages
 
