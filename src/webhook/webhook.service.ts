@@ -21,6 +21,6 @@ export class WebhookService {
   }
 
   async processWebhookEvents(data:any){
-    console.log(data);
+    console.log(data?.entry[0]?.hop_context);
   }
 }
