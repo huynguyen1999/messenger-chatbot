@@ -1,0 +1,9 @@
+app:
+  port: 3000
+
+facebook:
+  access_token: EAAGeqaVIuesBACbkLLIqMXRX53cGvKf4igJZBQDIffDKZAlTc9x5GjgxI55oFhXavWndKO0AavZASk67rlBG04DFw6Sg2xKyBWNdF9z5ZAb3TfmVcoD2u5yPp0ZAZByecTQ2vCKXtUe6MlcJi3SZAS95BdnnfsNGUx6bCvZBGPBHbQED2gYRJVr0
+  verify_token: MESSENGER_CHATBOT
+
+database:
+  uri: mongodb+srv://conghuy:conghuynt1999@cluster1.oq1l7.mongodb.net/chatbot
