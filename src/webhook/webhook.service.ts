@@ -20,7 +20,9 @@ export class WebhookService {
     throw new InvalidVerifyToken('Invalid verify token!');
   }
 
-  async processWebhookEvents(data:any){
-    console.log(data?.entry[0]?.messaging[0]?.message);
+  async processWebhookEvents(data: any) {
+    const message = data?.entry[0]?.messaging[0]?.message;
+    console.log('message', message);
+    console.log('nlp', message?.nlp);
   }
 }
