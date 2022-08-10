@@ -7,6 +7,7 @@ export class WebhookService {
   constructor(private configService: ConfigService) {}
 
   verifyWebhook(data: any) {
+    console.log(data);
     const mode = data['hub.mode'],
       verifyToken = data['hub.verify_token'],
       challenge = data['hub.challenge'];

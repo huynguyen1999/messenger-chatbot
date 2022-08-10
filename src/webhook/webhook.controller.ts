@@ -7,12 +7,11 @@ export class WebhookController {
 
   @Get()
   verifyWebhook(@Query() data: any, @Req() req: any, @Res() res: any) {
-    try{
-        const challenge = this.webhookService.verifyWebhook(data);
-        res.status(200).send(challenge);
-    }
-    catch(error){
-        res.status(403).json(error);
+    try {
+      const challenge = this.webhookService.verifyWebhook(data);
+      res.status(200).send(challenge);
+    } catch (error) {
+      res.status(403).json(error);
     }
   }
 
@@ -22,11 +21,10 @@ export class WebhookController {
     @Req() req: any,
     @Res() res: any,
   ) {
-    try{
-        await this.webhookService.processWebhookEvents(body);
-    }
-    catch(error){
-        res.status(403).json(error);
+    try {
+      await this.webhookService.processWebhookEvents(body);
+    } catch (error) {
+      res.status(403).json(error);
     }
   }
 }
