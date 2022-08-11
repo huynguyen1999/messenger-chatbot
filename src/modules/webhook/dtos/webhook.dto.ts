@@ -1,34 +1,34 @@
-class UserDto{
+export class UserDto{
     id: string;
 }
 
-class NlpLocaleDto{
+export class NlpLocaleDto{
     locale: string;
     confidence: number;
 }
 
-class MessageNlpDto{
+export class MessageNlpDto{
     entities: any;
     detected_locales: NlpLocaleDto[];
 }
 
-class MessageDto{
+export class MessageDto{
     mid: string;
     text: string;
     nlp: MessageNlpDto;
 }
 
-class WebhookEntryContext{
+export class WebhookEntryContext{
     app_id: string;
     metadata: string;
 }
-class WebhookMessagingDto{
+export class WebhookMessagingDto{
     sender: UserDto;
     recipient: UserDto;
     timestamp: number;
     message: MessageDto;
 }
-class WebhookEntryDto{
+export class WebhookEntryDto{
     id: string;
     time: number;
     messaging: WebhookMessagingDto[];

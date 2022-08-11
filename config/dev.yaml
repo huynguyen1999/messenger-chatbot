@@ -2,9 +2,10 @@ app:
   port: 3000
 
 facebook:
-  access_token: EAAGeqaVIuesBABzmZAe5Y4pJ7XukBZAhBa1KBIAZCE23gEuZCzM85wXyTaHKMZAaW4hW3DJ1qGtLZAUH3mjy8XZAi5EdpHXY09oRr56qKh6v2gn6qxueOgSdSyNZAFOobV0fD9Pe5bfpQVB2qqTM0ECGEgmRY5YZBqkiCZCl9Xf3itm1o0NvVZAIVEC
+  access_token: EAAGeqaVIuesBAJcZAfq9tQP5LILWZBJW9qZBVZCoir6sIunUAFFxjKylFZA7ZCTiNwCyKqgKMpGCYGOoebTIfXlLGWwIQlLqmks4zSRmKOjlP7xthVJoZBgicL4XB6zxFvYLprtZCQ6Kvy6kAkCtCvkDZCc7gRkVmrwpsaUzIZCTHJzizi8gZAeY7Jl
   verify_token: MESSENGER_CHATBOT
-  uri: https://graph.facebook.com/v14.0/me/messages
+  message_uri: https://graph.facebook.com/v14.0/me/messages
+  wit_token: UJ3ENGWTQOI7KOPA5G3ZEVDWUHJCOJFA
 
 database:
   uri: mongodb+srv://conghuy:conghuynt1999@cluster1.oq1l7.mongodb.net/chatbot

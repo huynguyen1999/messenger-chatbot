@@ -14,9 +14,24 @@ export const HelpResponse = {
   text: 'Let me help you through this hardship!',
 };
 
+export const RequestProduct = {
+  text: 'Please specify the product you want to order!',
+};
+
+export const RequestAddress = {
+  text: 'Please tell me your shipping address!',
+};
+
+// export const ConfirmOrder = {
+//   text: 'Order ',
+// };
+
 export const RESPONSE_TEMPLATE = {
   DEFAULT: DefaultResponse,
   GOODBYE: GoodbyeResponse,
   GREET: GreetResponse,
   HELP: HelpResponse,
+  REQUEST_PRODUCT: RequestProduct,
+  REQUEST_ADDRESS: RequestAddress,
+  // CONFIRM_ORDER: ConfirmOrder,
 };
