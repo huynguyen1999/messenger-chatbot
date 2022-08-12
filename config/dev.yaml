@@ -6,6 +6,7 @@ facebook:
   verify_token: MESSENGER_CHATBOT
   message_uri: https://graph.facebook.com/v14.0/me/messages
   wit_token: UJ3ENGWTQOI7KOPA5G3ZEVDWUHJCOJFA
+  wit_version: 20220812
 
 database:
   uri: mongodb+srv://conghuy:conghuynt1999@cluster1.oq1l7.mongodb.net/chatbot

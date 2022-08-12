@@ -3,7 +3,7 @@ import { WebhookModule } from './modules/webhook/webhook.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configuration } from './configuration';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ReplierModule } from './modules/replier/replier.module';
+import { NlpModule } from './modules/nlp/nlp.module';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { ReplierModule } from './modules/replier/replier.module';
       inject: [ConfigService],
     }),
     WebhookModule,
-    ReplierModule,
+    NlpModule,
   ],
 })
 export class AppModule {}

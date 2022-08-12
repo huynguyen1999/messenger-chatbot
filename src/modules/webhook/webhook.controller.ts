@@ -23,9 +23,13 @@ export class WebhookController {
     @Res() res: any,
   ) {
     try {
-      await this.webhookService.processWebhookEvents(body, req);
-
-      res.sendStatus(200);
+      if (body.object === 'page') {
+        // Iterate over each entry - there may be multiple if batched
+        body.entry.forEach(async (entry) => {
+          await this.webhookService.processWebhookEvents(entry, req);
+        });
+        res.status(200).send('EVENT_RECEIVED');
+      }
     } catch (error) {
       console.log(error);
       res.status(403).json(error);

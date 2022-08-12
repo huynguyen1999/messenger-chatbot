@@ -1,24 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InvalidVerifyToken } from './exceptions';
-import {
-  CONFIDENCE_THRESHOLD,
-  DEFINED_ENTITIES,
-  DEFINED_INTENTS,
-} from './webhook.constants';
+import { WebhookEntryDto } from './dtos';
+import { NlpService } from '../nlp/nlp.service';
 import * as util from 'util';
-import { WebhookDto } from './dtos';
-import { ReplierService } from '../replier/replier.service';
-import {Wit} from 'node-wit';
+import * as utf8 from 'utf8';
 @Injectable()
 export class WebhookService {
-  private witai:any;
   constructor(
     private configService: ConfigService,
-    private replierService: ReplierService,
-  ) {
-    // this.witai = new Wit();
-  }
+    private nlpService: NlpService,
+  ) {}
 
   verifyWebhook(data: any) {
     console.log(data);
@@ -34,40 +26,20 @@ export class WebhookService {
     throw new InvalidVerifyToken('Invalid verify token!');
   }
 
-  async processWebhookEvents(data: WebhookDto, req: any) {
-    console.log(util.inspect(data, { showHidden: false, depth: null }));
-    const follower = data.entry[0].messaging[0].sender;
-    const nlpEntities: any = data.entry[0].messaging[0].message.nlp?.entities;
-    // let intent = '';
+  async processWebhookEvents(data: WebhookEntryDto, req: any) {
+    const messageText = data.messaging[0].message.text;
 
-    const { intent=[], ...entities } = nlpEntities;
-    console.log(intent);
-    // if (
-    //   nlpEntities.intent &&
-    //   nlpEntities.intent[0].confidence >= CONFIDENCE_THRESHOLD
-    // ) {
-    //   intent = nlpEntities.intent[0].value;
-    // }
-   
+    const nlpEntities = await this.nlpService.message(messageText);
+    const sender = data.messaging[0].sender.id;
+    console.log(sender);
+    const { sessionId, contextMap } =
+      this.nlpService.findOrCreateSession(sender);
 
-    switch (intent[0].value) {
-      case DEFINED_INTENTS.GREET:
-        await this.replierService.sendGreet(follower);
-        break;
-      case DEFINED_INTENTS.GOODBYE:
-        await this.replierService.sendGoodbye(follower);
-        break;
-      case DEFINED_INTENTS.HELP:
-        await this.replierService.sendHelp(follower);
-        break;
-      case DEFINED_INTENTS.ORDER_REQUEST:
-        await this.replierService.processOrderRequest(follower, nlpEntities);
-        break;
-      case DEFINED_INTENTS.ORDER_PAYMENT:
-        await this.replierService.processOrderPayment(follower, nlpEntities);
-        break;
-      default:
-        await this.replierService.sendDefault(follower);
-    }
+    const result = await this.nlpService.runComposer(
+      sessionId,
+      contextMap,
+      messageText,
+    );
+    return result;
   }
 }

@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 import { WebhookController } from './webhook.controller';
-import { ReplierModule } from '../replier/replier.module';
+import { NlpModule } from '../nlp/nlp.module';
+import { configuration } from 'src/configuration';
 
+const configs = configuration();
 @Module({
-  imports: [ReplierModule],
+  imports: [
+    NlpModule.register({
+      accessToken: configs.facebook.wit_token,
+      apiVersion: configs.facebook.wit_version,
+    }),
+  ],
   providers: [WebhookService],
   controllers: [WebhookController],
 })

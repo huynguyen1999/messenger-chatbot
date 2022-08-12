@@ -11,7 +11,7 @@ const ProductSchema = new mongoose.Schema<
     inventory: Number,
   },
   {
-    collection: 'zalo-messages',
+    collection: 'products',
     autoIndex: true,
     autoCreate: true,
     toJSON: { virtuals: true },

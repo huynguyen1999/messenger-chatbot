@@ -1,9 +1,9 @@
 import { Document } from 'mongoose';
 
 export interface ICart {
-  product: string;
-  quantity: number;
-  follower: string;
+  user_id: string;
+  product_id: number;
+  quantity: string;
 }
 
 export interface ICartDocument extends ICart, Document {}
