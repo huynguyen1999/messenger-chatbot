@@ -23,7 +23,7 @@ export class NlpActionService {
   }
 
   async confirmOrder(contextMap) {
-    return contextMap;
+    return { context_map: { ...contextMap, order_success: true } };
   }
 
   async processPayment(contextMap) {

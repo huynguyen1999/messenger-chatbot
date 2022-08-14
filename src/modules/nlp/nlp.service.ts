@@ -79,7 +79,7 @@ export class NlpService {
       });
       // process actions
       const { action, context_map, expects_input, stop } = result.data;
-      console.log(result.data);
+      console.log(util.inspect(result.data, true, null, false));
       this.sessions[sessionId].contextMap = context_map;
 
       if (action) {
