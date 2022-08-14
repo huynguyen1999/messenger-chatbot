@@ -6,12 +6,7 @@ import { configuration } from 'src/configuration';
 
 const configs = configuration();
 @Module({
-  imports: [
-    NlpModule.register({
-      accessToken: configs.facebook.wit_token,
-      apiVersion: configs.facebook.wit_version,
-    }),
-  ],
+  imports: [NlpModule],
   providers: [WebhookService],
   controllers: [WebhookController],
 })

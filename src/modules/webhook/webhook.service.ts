@@ -4,7 +4,7 @@ import { InvalidVerifyToken } from './exceptions';
 import { WebhookEntryDto } from './dtos';
 import { NlpService } from '../nlp/nlp.service';
 import * as util from 'util';
-import * as utf8 from 'utf8';
+
 @Injectable()
 export class WebhookService {
   constructor(
@@ -29,7 +29,7 @@ export class WebhookService {
   async processWebhookEvents(data: WebhookEntryDto, req: any) {
     const messageText = data.messaging[0].message.text;
 
-    const nlpEntities = await this.nlpService.message(messageText);
+    // const nlpEntities = await this.nlpService.message(messageText);
     const sender = data.messaging[0].sender.id;
     console.log(sender);
     const { sessionId, contextMap } =
@@ -40,6 +40,7 @@ export class WebhookService {
       contextMap,
       messageText,
     );
+
     return result;
   }
 }
