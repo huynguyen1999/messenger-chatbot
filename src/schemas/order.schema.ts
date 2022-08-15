@@ -32,7 +32,7 @@ OrderSchema.virtual('_user', {
 
 OrderSchema.virtual('_product', {
   ref: MODEL_NAME.PRODUCT,
-  localField: 'product',
+  localField: 'product_id',
   foreignField: '_id',
   justOne: true,
 });

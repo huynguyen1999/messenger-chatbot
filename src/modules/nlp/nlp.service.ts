@@ -1,6 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Wit } from 'node-wit';
-import { IWitOptions } from './nlp.types';
+import { Injectable } from '@nestjs/common';
+import { ISession } from './nlp.types';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import * as util from 'util';
@@ -9,7 +8,7 @@ import { NlpActionService } from './nlp.action.service';
 
 @Injectable()
 export class NlpService {
-  private sessions: any;
+  private sessions: ISession;
   private witToken: string;
   private apiVersion: string;
   private witUri: string;
@@ -25,6 +24,7 @@ export class NlpService {
       Authorization: 'Bearer ' + this.witToken,
       'Content-Type': 'application/json',
     };
+    //@ts-ignore
     this.sessions = {};
   }
 
@@ -40,12 +40,12 @@ export class NlpService {
     if (!sessionId) {
       // No session found for user fbid, let's create a new one
       sessionId = uuidv4();
-      this.sessions[sessionId] = { fbid: fbid, context: {} };
+      this.sessions[sessionId] = { fbid: fbid, contextMap: {} };
     }
-    return { sessionId, contextMap: this.sessions[sessionId].context };
+    return { sessionId, contextMap: this.sessions[sessionId].contextMap };
   }
 
-  async message(messageText: string) {
+  async message(messageText: string = '') {
     try {
       const result = await axios({
         method: 'GET',
@@ -56,16 +56,23 @@ export class NlpService {
       });
       return result.data;
     } catch (error) {
-      console.log('error: ', error);
+      console.log('error message');
     }
   }
 
-  async runComposer(sessionId: string, contextMap: any, messageText?: string) {
+  async runComposer(
+    sessionId: string,
+    contextMap: any,
+    messageText: string = '',
+  ) {
     try {
-      const requestBody: any = {};
-      if (messageText) {
-        requestBody.type = 'message';
-        requestBody.message = messageText;
+      const requestBody: any = {
+        type: 'message',
+        message: messageText,
+      };
+      let understanding: any = {};
+      if (messageText != '') {
+        understanding = await this.message(messageText);
       }
       const result = await axios({
         method: 'POST',
@@ -78,16 +85,26 @@ export class NlpService {
         data: requestBody,
       });
       // process actions
-      const { action, context_map, expects_input, stop } = result.data;
       console.log(util.inspect(result.data, true, null, false));
-      this.sessions[sessionId].contextMap = context_map;
+      const { action, context_map, expects_input, stop, response } =
+        result.data;
 
+      this.sessions[sessionId].contextMap = context_map;
+      understanding.user_id = this.sessions[sessionId].fbid;
       if (action) {
-        const actionResult: any = await this.runAction(action, context_map);
+        const actionResult: any = await this.runAction(
+          action,
+          context_map,
+          understanding,
+        );
         const actionContextMap = actionResult?.context_map;
         if (expects_input && !stop) {
-          await this.runComposer(sessionId, actionContextMap, '');
+          await this.runComposer(sessionId, actionContextMap);
         }
+      }
+
+      if (response) {
+        await this.nlpActionService.sendResponse(response, understanding);
       }
 
       return result.data;
@@ -96,20 +113,42 @@ export class NlpService {
     }
   }
 
-  async runAction(action: string, contextMap: any) {
+  async runAction(action: string, contextMap: any, understanding: any) {
     try {
       let result: any = null;
       switch (action) {
-        case 'bruh':
-          result = await this.nlpActionService.bruh(contextMap);
+        case 'SET_ADDRESS':
+          result = this.nlpActionService.setAddress(contextMap, understanding);
+          break;
+        case 'SET_PRODUCT':
+          result = this.nlpActionService.setProduct(contextMap, understanding);
           break;
         case 'CONFIRM_ORDER':
-          result = await this.nlpActionService.confirmOrder(contextMap);
+          result = await this.nlpActionService.confirmOrder(
+            contextMap,
+            understanding,
+          );
+          break;
+        case 'CLEAR_ORDER':
+          result = this.nlpActionService.clearOrder(contextMap, understanding);
           break;
         case 'PROCESS_PAYMENT':
-          result = await this.nlpActionService.processPayment(contextMap);
+          result = await this.nlpActionService.processPayment(
+            contextMap,
+            understanding,
+          );
+          break;
+        case 'SEND_PAYMENT_LINK':
+          result = await this.nlpActionService.sendPaymentLink(
+            contextMap,
+            understanding,
+          );
           break;
         default:
+          result = this.nlpActionService.defaultAction(
+            contextMap,
+            understanding,
+          );
           break;
       }
       return result;

@@ -29,9 +29,7 @@ export class WebhookService {
   async processWebhookEvents(data: WebhookEntryDto, req: any) {
     const messageText = data.messaging[0].message.text;
 
-    // const nlpEntities = await this.nlpService.message(messageText);
     const sender = data.messaging[0].sender.id;
-    console.log(sender);
     const { sessionId, contextMap } =
       this.nlpService.findOrCreateSession(sender);
 

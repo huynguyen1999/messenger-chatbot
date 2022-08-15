@@ -1,7 +1,9 @@
-
-export interface IWitOptions {
-  accessToken: string;
-  actions?: any;
-  logger?: any;
-  apiVersion: string;
+export interface ISession {
+  fbid: string;
+  contextMap: any;
 }
+
+export const STATUS = {
+  UNPAID: 'UNPAID',
+  PAID: 'PAID',
+};

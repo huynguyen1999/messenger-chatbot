@@ -2,7 +2,7 @@ app:
   port: 3000
 
 facebook:
-  access_token: EAAGeqaVIuesBAJcZAfq9tQP5LILWZBJW9qZBVZCoir6sIunUAFFxjKylFZA7ZCTiNwCyKqgKMpGCYGOoebTIfXlLGWwIQlLqmks4zSRmKOjlP7xthVJoZBgicL4XB6zxFvYLprtZCQ6Kvy6kAkCtCvkDZCc7gRkVmrwpsaUzIZCTHJzizi8gZAeY7Jl
+  access_token: EAAGeqaVIuesBAMwmUOCsGYdkpFmFFFYbIm8uMAZCqEdsUZCZAIEBw7OS8SV2GBVZBDLcv1PGnZCZCTgqrVKCINRIgUA6wGgEGvbTpgQ0kEHZBtgihv6UVVIcHuyXJejfvX1xyN8epZCF3pLN07q4UbsH01fZAdv8ZBnL1kEZAV6aGp5xVdCKZBtOvQZAy
   verify_token: MESSENGER_CHATBOT
   message_uri: https://graph.facebook.com/v14.0/me/messages
   wit_token: UJ3ENGWTQOI7KOPA5G3ZEVDWUHJCOJFA
@@ -10,4 +10,4 @@ facebook:
   wit_uri: https://api.wit.ai
 
 database:
-  uri: mongodb+srv://conghuy:conghuynt1999@cluster1.oq1l7.mongodb.net/chatbot
+  uri: mongodb+srv://conghuy:conghuynt1999@cluster1.oq1l7.mongodb.net/messenger_chatbot
